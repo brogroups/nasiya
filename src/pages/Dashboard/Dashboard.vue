@@ -10,11 +10,7 @@
     </div>
 
     <div class="stats">
-      <div
-        class="stat-card"
-        v-for="(value, key) in total"
-        :key="'total-' + key"
-      >
+      <div class="stat-card" v-for="(value, key) in total" :key="'total-' + key">
         <h2 v-if="typeof value === 'number'">{{ value }}</h2>
         <div v-else>
           <p v-for="(v, k) in value" :key="k">
@@ -27,68 +23,66 @@
 
     <div class="recent">
       <h3>So‘nggi faoliyat</h3>
-      <table  v-if="recentActivities.length">
+      <table v-if="recentActivities.length">
         <thead>
           <tr>
-       <th>Client Name</th>
-       <th>Quantity</th>
-       <th>Price</th>
-       <th>Date</th>
-       <th>Info</th>
+            <th>Client Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Info</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(activity, idx) in recentActivities" :key="idx">
-       <td>{{ idx }}</td>
-       <td>{{ activity.quantity }}</td>
-       <td>{{ activity.price }}</td>
-       <td>{{ activity.date }}</td>
-       <td>{{ activity.info }}</td>
+            <td>{{ idx }}</td>
+            <td>{{ activity.quantity }}</td>
+            <td>{{ activity.price }}</td>
+            <td>{{ activity.date }}</td>
+            <td>{{ activity.info }}</td>
           </tr>
         </tbody>
       </table>
-      <div v-else>
-        So‘nggi faoliyatlar mavjud emas.
-      </div>
+      <div v-else>So‘nggi faoliyatlar mavjud emas.</div>
     </div>
-    
   </div>
 </template>
 
 <script>
-import axios from '../../Utils/axios.js';
+import axios from "../../Utils/axios.js";
 
 export default {
   data() {
     return {
       today: {},
       total: {},
-      recentActivities: []
+      recentActivities: [],
     };
   },
   methods: {
     async fetchStatistics() {
       try {
-        const res = await axios.get('/statistic');
-       console.log(res.data);
-       
+        const res = await axios.get("/statistic");
+        console.log(res.data);
+
         this.today = res.data.statistic.today || {};
         this.total = res.data.statistic.total || {};
-        this.recentActivities = res.data.statistic.recentActivities || this.recentActivities;
+        this.recentActivities =
+          res.data.statistic.recentActivities || this.recentActivities;
       } catch (error) {
-        console.error('Error fetching statistics:', error);
+        console.error("Error fetching statistics:", error);
       }
-    }
+    },
   },
   mounted() {
     this.fetchStatistics();
-  }
+  },
 };
 </script>
 
 <style scoped>
 .dashboard {
- width: 100%;
+  width: 100%;
   padding: 32px;
   background-color: var(--primary-bg);
   margin: 0 auto;
@@ -141,27 +135,27 @@ h1 {
   border-bottom: 1px solid var(--border-color);
 }
 .recent table {
- width: 100%;
- border-collapse: collapse;
- margin-top: 16px;
- background: var(--primary-bg);
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background: var(--primary-bg);
 }
 
 .recent th,
 .recent td {
- padding: 12px 8px;
- text-align: left;
- border-bottom: 1px solid var(--border-color);
- color: var(--primary-text);
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-text);
 }
 
 .recent th {
- background: var(--card-bg);
- font-weight: bold;
+  background: var(--card-bg);
+  font-weight: bold;
 }
 
 .recent tr:hover {
- background: var(--hover-bg);
- cursor: pointer;
+  background: var(--hover-bg);
+  cursor: pointer;
 }
 </style>

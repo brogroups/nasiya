@@ -23,7 +23,9 @@
           <input type="text" id="address" v-model="usta.address" />
         </div>
         <div class="buttonbox">
-          <button type="button" class="cancel-btn" @click="closeModal">Bekor qilish</button>
+          <button type="button" class="cancel-btn" @click="closeModal">
+            Bekor qilish
+          </button>
           <button type="submit" class="save-btn">Saqlash</button>
         </div>
       </form>
@@ -32,31 +34,31 @@
 </template>
 
 <script setup>
-import { reactive, ref, nextTick, onMounted } from 'vue'
+import { reactive, ref, nextTick, onMounted } from "vue";
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
 const usta = reactive({
-  name: '',
-  phone: '',
-  specialty: '',
-  address: ''
-})
+  name: "",
+  phone: "",
+  specialty: "",
+  address: "",
+});
 
 function submitForm() {
-  alert('Usta ma\'lumotlari saqlandi:\n' + JSON.stringify(usta, null, 2))
+  alert("Usta ma'lumotlari saqlandi:\n" + JSON.stringify(usta, null, 2));
 }
 
 function closeModal() {
-  emit('close')
+  emit("close");
 }
 
-const show = ref(false)
+const show = ref(false);
 onMounted(() => {
   nextTick(() => {
-    show.value = true
-  })
-})
+    show.value = true;
+  });
+});
 </script>
 
 <style scoped>
@@ -121,7 +123,7 @@ input {
 
 .save-btn {
   background: var(--accent);
-  color: #1E1E2F;
+  color: #1e1e2f;
   border: none;
   padding: 10px 20px;
   border-radius: 6px;

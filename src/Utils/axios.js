@@ -1,24 +1,24 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
- baseURL: 'http://localhost:5000', // o'zgartiring kerakli API manziliga
- timeout: 10000,
- headers: {
-  'Content-Type': 'application/json',
- },
+  baseURL: "http://localhost:5000", // o'zgartiring kerakli API manziliga
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Interceptor for request
 api.interceptors.request.use(
- (config) => {
-  // Add any custom logic before sending the request
-  // For example, you can add authentication tokens here
-  return config;
- },
- (error) => {
-  // Handle request error
-  return Promise.reject(error);
- }
-); 
+  (config) => {
+    // Add any custom logic before sending the request
+    // For example, you can add authentication tokens here
+    return config;
+  },
+  (error) => {
+    // Handle request error
+    return Promise.reject(error);
+  }
+);
 
 export default api;
