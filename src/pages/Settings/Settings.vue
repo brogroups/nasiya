@@ -1,74 +1,79 @@
 <template>
- <div class="settings-page">
-  <h2>Sozlamalar</h2>
-  <div class="profile-info">
-   <p><strong>Profil turi:</strong> {{ userProfileType }}</p>
-   <p><strong>Login:</strong> {{ userLogin }}</p>
-  </div>
+  <div class="settings-page">
+    <h2>Sozlamalar</h2>
+    <div class="profile-info">
+      <p><strong>Profil turi:</strong> {{ userProfileType }}</p>
+      <p><strong>Login:</strong> {{ userLogin }}</p>
+    </div>
 
-  <form @submit.prevent="changePassword">
-   <h3>Parolni o'zgartirish</h3>
-   <div>
-    <label for="currentPassword">Joriy parol</label>
-    <input type="password" v-model="currentPassword" id="currentPassword" required />
-   </div>
-   <div>
-    <label for="newPassword">Yangi parol</label>
-    <input type="password" v-model="newPassword" id="newPassword" required />
-   </div>
-   <div>
-    <label for="confirmPassword">Yangi parolni tasdiqlang</label>
-    <input type="password" v-model="confirmPassword" id="confirmPassword" required />
-   </div>
-   <button type="submit">Parolni o'zgartirish</button>
-   <p v-if="passwordMessage" :class="{ error: passwordError, success: !passwordError }">{{ passwordMessage }}</p>
-  </form>
- </div>
+    <form @submit.prevent="changePassword">
+      <h3>Parolni o'zgartirish</h3>
+      <div>
+        <label for="currentPassword">Joriy parol</label>
+        <input type="password" v-model="currentPassword" id="currentPassword" required />
+      </div>
+      <div>
+        <label for="newPassword">Yangi parol</label>
+        <input type="password" v-model="newPassword" id="newPassword" required />
+      </div>
+      <div>
+        <label for="confirmPassword">Yangi parolni tasdiqlang</label>
+        <input type="password" v-model="confirmPassword" id="confirmPassword" required />
+      </div>
+      <button type="submit">Parolni o'zgartirish</button>
+      <p
+        v-if="passwordMessage"
+        :class="{ error: passwordError, success: !passwordError }"
+      >
+        {{ passwordMessage }}
+      </p>
+    </form>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
 // Bu yerda user ma'lumotlarini olish uchun o'zingizning auth/store yoki API chaqiruvingizdan foydalaning
 // Misol uchun:
 const user = ref({
- profileType: 'Admin', // yoki 'User', 'Moderator', va hokazo
- login: 'user@example.com'
-})
+  profileType: "Admin", // yoki 'User', 'Moderator', va hokazo
+  login: "user@example.com",
+});
 
-const userProfileType = computed(() => user.value.profileType)
-const userLogin = computed(() => user.value.login)
+const userProfileType = computed(() => user.value.profileType);
+const userLogin = computed(() => user.value.login);
 
-const currentPassword = ref('')
-const newPassword = ref('')
-const confirmPassword = ref('')
-const passwordMessage = ref('')
-const passwordError = ref(false)
+const currentPassword = ref("");
+const newPassword = ref("");
+const confirmPassword = ref("");
+const passwordMessage = ref("");
+const passwordError = ref(false);
 
 function changePassword() {
- passwordMessage.value = ''
- passwordError.value = false
+  passwordMessage.value = "";
+  passwordError.value = false;
 
- if (newPassword.value !== confirmPassword.value) {
-  passwordMessage.value = "Yangi parollar mos emas!"
-  passwordError.value = true
-  return
- }
- if (newPassword.value.length < 6) {
-  passwordMessage.value = "Parol kamida 6 ta belgidan iborat bo'lishi kerak."
-  passwordError.value = true
-  return
- }
+  if (newPassword.value !== confirmPassword.value) {
+    passwordMessage.value = "Yangi parollar mos emas!";
+    passwordError.value = true;
+    return;
+  }
+  if (newPassword.value.length < 6) {
+    passwordMessage.value = "Parol kamida 6 ta belgidan iborat bo'lishi kerak.";
+    passwordError.value = true;
+    return;
+  }
 
- // Parolni o'zgartirish uchun API chaqiruvi (mock)
- // await api.changePassword({ currentPassword: currentPassword.value, newPassword: newPassword.value })
- setTimeout(() => {
-  passwordMessage.value = "Parol muvaffaqiyatli o'zgartirildi!"
-  passwordError.value = false
-  currentPassword.value = ''
-  newPassword.value = ''
-  confirmPassword.value = ''
- }, 1000)
+  // Parolni o'zgartirish uchun API chaqiruvi (mock)
+  // await api.changePassword({ currentPassword: currentPassword.value, newPassword: newPassword.value })
+  setTimeout(() => {
+    passwordMessage.value = "Parol muvaffaqiyatli o'zgartirildi!";
+    passwordError.value = false;
+    currentPassword.value = "";
+    newPassword.value = "";
+    confirmPassword.value = "";
+  }, 1000);
 }
 </script>
 
@@ -134,7 +139,7 @@ button {
   width: 100%;
   padding: 12px 0;
   background: var(--accent);
-  color: #1E1E2F;
+  color: #1e1e2f;
   border: none;
   border-radius: 6px;
   font-size: 16px;

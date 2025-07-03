@@ -1,29 +1,27 @@
 :root {
-  --primary-bg: #1E1E2F;
-  --secondary-bg: #2A2A3B;
+  --primary-bg: #1e1e2f;
+  --secondary-bg: #2a2a3b;
   --navbar-bg: #151520;
-  --tablitsa-bg: #2F3142;
+  --tablitsa-bg: #2f3142;
   --hover-bg: #151520;
-  --card-bg: #2F3142;
+  --card-bg: #2f3142;
 
-  --primary-text: #E6E6EB;
-  --secondary-text: #B0B3C2;
-  --muted-text: #7F8393;
+  --primary-text: #e6e6eb;
+  --secondary-text: #b0b3c2;
+  --muted-text: #7f8393;
 
-  --accent: #FFB84C;
-  --accent-hover: #FF9F1C;
-  --border-color: #3D3F50;
+  --accent: #ffb84c;
+  --accent-hover: #ff9f1c;
+  --border-color: #3d3f50;
 
-  --success: #4CAF50;
-  --warning: #FFC107;
-  --danger: #FF5252;
-  --info: #00BCD4;
+  --success: #4caf50;
+  --warning: #ffc107;
+  --danger: #ff5252;
+  --info: #00bcd4;
 
-  --modal-bg: #242637;             /* Modal fon rangi */
---modal-overlay: rgba(0, 0, 0, 0.7); /* Modal ustidagi qora fon */
---modal-shadow: rgba(0, 0, 0, 0.4);  /* Pastki soyasi */
-
-
+  --modal-bg: #242637;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --modal-shadow: rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -33,7 +31,7 @@
 }
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: var(--primary-bg);
   color: var(--primary-text);
 }
@@ -60,12 +58,20 @@ li:last-child {
   border-bottom: none;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--primary-text);
 }
-h1 { font-size: 2em; }
-h2 { font-size: 1.5em; }
-h3 { font-size: 1.2em; }
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.2em;
+}
 
 p {
   line-height: 1.6;
@@ -99,7 +105,7 @@ img {
 
 .button {
   background-color: var(--accent);
-  color: #1E1E2F;
+  color: #1e1e2f;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -146,7 +152,8 @@ img {
   background-color: var(--card-bg);
   color: var(--primary-text);
 }
-.table th, .table td {
+.table th,
+.table td {
   border: 1px solid var(--border-color);
   padding: 10px;
   text-align: left;
@@ -158,7 +165,7 @@ img {
   background-color: #242637;
 }
 .table tr:hover {
-  background-color: #3A3D50;
+  background-color: #3a3d50;
 }
 
 .alert {
@@ -180,7 +187,7 @@ img {
 }
 .alert-info {
   background-color: rgba(0, 188, 212, 0.2);
-  color: #00BCD4;
+  color: #00bcd4;
 }
 
 .navbar {
@@ -208,7 +215,6 @@ img {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-
 .scrollable {
   height: 100vh;
   overflow-y: auto;
@@ -229,4 +235,4 @@ img {
 }
 .scrollable::-webkit-scrollbar-thumb:active {
   background-color: var(--accent-hover);
-} 
+}

@@ -6,23 +6,22 @@
 export default {
   name: "App",
   mounted() {
-    const token = localStorage.getItem('user');
-    if (!token && this.$route?.name !== 'Login') {
-      this.$router.replace({ name: 'Login' });
-    } else if (token && this.$route?.name === 'Login') {
-      this.$router.replace({ name: 'Home' });
+    const token = localStorage.getItem("user");
+    if (!token && this.$route?.name !== "Login") {
+      this.$router.replace({ name: "Login" });
+    } else if (token && this.$route?.name === "Login") {
+      this.$router.replace({ name: "Home" });
     }
   },
   watch: {
-    '$route'(to) {
-      const token = localStorage.getItem('user');
-      if (!token && to.name !== 'Login') {
-        this.$router.replace({ name: 'Login' });
-      } else if (token && to.name === 'Login') {
-        this.$router.replace({ name: 'Home' });
+    $route(to) {
+      const token = localStorage.getItem("user");
+      if (!token && to.name !== "Login") {
+        this.$router.replace({ name: "Login" });
+      } else if (token && to.name === "Login") {
+        this.$router.replace({ name: "Home" });
       }
-    }
-  }
-}
-
+    },
+  },
+};
 </script>
