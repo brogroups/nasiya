@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
- baseURL: 'https://your-api-url.com', // o'zgartiring kerakli API manziliga
+ baseURL: 'http://localhost:5000', // o'zgartiring kerakli API manziliga
  timeout: 10000,
  headers: {
   'Content-Type': 'application/json',
