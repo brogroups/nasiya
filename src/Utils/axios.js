@@ -1,24 +1,41 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "http://localhost:5000", // o'zgartiring kerakli API manziliga
-  timeout: 10000,
+  baseURL: 'http://localhost:5000',
+
+  withCredentials: true,
+  timeout: 40000,
   headers: {
     "Content-Type": "application/json",
-  },
+    "Accept": "application/json",
+  }
 });
 
-// Interceptor for request
+
 api.interceptors.request.use(
   (config) => {
-    // Add any custom logic before sending the request
-    // For example, you can add authentication tokens here
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
   },
   (error) => {
-    // Handle request error
+    return Promise.reject(error);
+  }
+)
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 403) {
+      localStorage.removeItem("user");
+    }
+
     return Promise.reject(error);
   }
 );
+
 
 export default api;

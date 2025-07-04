@@ -5,7 +5,9 @@
         <h2>Usta Ma'lumotlari</h2>
         <p class="close-btn" @click="closeModal">X</p>
       </div>
-      <form @submit.prevent="submitForm">
+
+      <!-- Usta Ma'lumotlari -->
+      <div class="form-top">
         <div class="form-group">
           <label for="name">Ism</label>
           <input type="text" id="name" v-model="usta.name" required />
@@ -22,45 +24,113 @@
           <label for="address">Manzili</label>
           <input type="text" id="address" v-model="usta.address" />
         </div>
-        <div class="buttonbox">
-          <button type="button" class="cancel-btn" @click="closeModal">
-            Bekor qilish
-          </button>
-          <button type="submit" class="save-btn">Saqlash</button>
+      </div>
+      <form @submit.prevent="addProduct">
+        <div class="form-product">
+          <label>Mahsulot nomi</label>
+          <input type="text" v-model="product.name" required />
+        </div>
+        <div class="form-product">
+          <label>Narxi</label>
+          <input type="number" v-model="product.price" required />
+        </div>
+        <div class="form-product">
+          <label>Soni</label>
+          <input type="number" v-model="product.qty" required />
+        </div>
+        <div class="form-product">
+          <label>&nbsp;</label>
+          <button type="submit" class="save-btn">Mahsulot qo‘shish</button>
         </div>
       </form>
+
+      <!-- Jadval -->
+      <table class="table scrollable">
+        <thead>
+          <tr>
+            <th>Mahsulot nomi</th>
+            <th>Narxi</th>
+            <th>Soni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in products" :key="index">
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.qty }}</td>
+          </tr>
+          <tr v-if="products.length === 0">
+            <td colspan="3" class="text-center">Mahsulotlar mavjud emas</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Tugmalar -->
+      <div class="buttonbox">
+        <button type="button" class="cancel-btn" @click="closeModal">
+          Bekor qilish
+        </button>
+        <button type="button" class="save-btn" @click="saveUsta">
+          Ustani saqlash
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { reactive, ref, nextTick, onMounted } from "vue";
-
-const emit = defineEmits(["close"]);
-
-const usta = reactive({
-  name: "",
-  phone: "",
-  specialty: "",
-  address: "",
-});
-
-function submitForm() {
-  alert("Usta ma'lumotlari saqlandi:\n" + JSON.stringify(usta, null, 2));
-}
-
-function closeModal() {
-  emit("close");
-}
-
-const show = ref(false);
-onMounted(() => {
-  nextTick(() => {
-    show.value = true;
-  });
-});
+<script>
+export default {
+  name: "UstaModal",
+  emits: ["close"],
+  data() {
+    return {
+      show: false,
+      usta: {
+        name: "",
+        phone: "",
+        specialty: "",
+        address: "",
+      },
+      product: {
+        name: "",
+        price: "",
+        qty: "",
+      },
+      products: [],
+    };
+  },
+  mounted() {
+    this.show = true;
+  },
+  methods: {
+    closeModal() {
+      this.$emit("close");
+    },
+    addProduct() {
+      if (this.product.name && this.product.price && this.product.qty) {
+        this.products.push({ ...this.product });
+        this.product.name = "";
+        this.product.price = "";
+        this.product.qty = "";
+      } else {
+        alert("Iltimos, barcha mahsulot maydonlarini to‘ldiring.");
+      }
+    },
+    saveUsta() {
+      if (this.usta.name && this.usta.phone && this.usta.specialty) {
+        const ustaData = {
+          ...this.usta,
+          products: [...this.products],
+        };
+        console.log("Usta ma'lumotlari:", ustaData);
+        alert("Usta va mahsulotlar muvaffaqiyatli saqlandi!");
+      } else {
+        alert("Iltimos, usta haqida barcha maydonlarni to‘ldiring.");
+      }
+    },
+  },
+};
 </script>
-
 <style scoped>
 .usta-model-modal {
   position: fixed;
@@ -76,7 +146,7 @@ onMounted(() => {
 }
 
 .usta-model-form {
-  width: 60%;
+  width: 80%;
   height: 100%;
   background: var(--modal-bg, #242637);
   padding: 24px;
@@ -85,6 +155,9 @@ onMounted(() => {
   color: var(--primary-text);
   animation: slideInRight 0.4s ease forwards;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .header {
@@ -96,8 +169,26 @@ onMounted(() => {
 
 form {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 16px;
+}
+.form-group{
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-product {
+  width: 18%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.form-product>button{
+  margin-top: 18px;
 }
 
 .form-group label {
@@ -162,5 +253,43 @@ input {
     transform: translateX(0);
     opacity: 1;
   }
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.table th {
+  background-color: var(--secondary-bg);
+  color: var(--primary-text);
+}       
+.table td {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+.table tr:nth-child(even) {
+  background-color: var(--secondary-bg);
+}
+.table tr:hover {
+  background-color: var(--hover-bg);
+}
+.table th {
+  font-weight: 600;
+  font-size: 16px;
+}
+.table td {
+  font-size: 14px;
+}
+.table tr {
+  transition: background-color 0.3s ease;
+}
+.table tr:hover {
+  background-color: var(--hover-bg);
 }
 </style>
