@@ -1,12 +1,14 @@
 <template>
   <div class="header">
     <h2>Mijozlar</h2>
-    <button @click="showMijozModel = true" class="fetch-btn">Mijoz yaratish</button>
+    <button @click="showMijozModel = true" class="fetch-btn">
+      Mijoz yaratish
+    </button>
   </div>
   <div class="ustalar-page scrollable">
     <table v-if="users.length" class="users-table scrollable">
       <thead>
-          <tr class="table-header">
+        <tr class="table-header">
           <th>#</th>
           <th>Ism</th>
           <th>Telefon</th>
@@ -25,27 +27,44 @@
             <input type="number" v-model="paid" />
             <button v-on:click="paidRequest(user._id)">tolov</button>
           </td>
-          <td><button class="defa-btn">Batafsil</button></td>
+          <td>
+            <button class="defa-btn" @click="showInfo(user)">Batafsil</button>
+          </td>
         </tr>
       </tbody>
     </table>
     <div v-else class="no-data">Ma'lumotlar yo'q</div>
   </div>
-  <MijozModel v-if="showMijozModel" @close="showMijozModel = false" />
+  <MijozModel
+    v-if="showMijozModel"
+    @close="(showMijozModel = false), fetchUsers()"
+  />
+  <Batafsil
+    v-if="showBatafsil"
+    :type="'klient'"
+    :user="batafsilUser"
+    @close="(showBatafsil = false), fetchUsers()"
+  />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import MijozModel from "./MijozModel.vue";
 import api from "../../Utils/axios";
+import Batafsil from "../../components/Batafsil/Batafsil.vue";
 const users = ref([]);
 const showMijozModel = ref(false);
 const paid = ref(0);
-
+let showBatafsil = ref(false);
+let batafsilUser = ref({});
+function showInfo(user) {
+  showBatafsil.value = true;
+  batafsilUser.value = user;
+}
 const fetchUsers = async () => {
   try {
     const res = await api.get("/nasiya/get/klient");
-    users.value = res.data.datas
+    users.value = res.data.datas;
   } catch (e) {
     users.value = [];
   }
@@ -55,7 +74,7 @@ const paidRequest = (id) => {
     .post("/paid/" + id, { paid: paid.value || 0 })
     .then((res) => {
       console.log(res);
-      paid.value = 0
+      paid.value = 0;
       fetchUsers();
       alert("Tolov boldi");
     })
@@ -117,12 +136,12 @@ onMounted(fetchUsers);
   z-index: 10;
 }
 
-.tr-box{
+.tr-box {
   display: flex;
   gap: 10px;
 }
 .defa-btn,
-.tr-box>button{
+.tr-box > button {
   padding: 8px 20px;
   background: var(--accent);
 
@@ -132,17 +151,16 @@ onMounted(fetchUsers);
   transition: background 0.2s;
 }
 .defa-btn:hover,
-.tr-box>button:hover{
+.tr-box > button:hover {
   background: var(--accent-hover);
 }
-.tr-box>input{
+.tr-box > input {
   background: none;
   color: #fff;
   outline: none;
   padding: 8px 10px;
-  border: 1px solid  #ccc;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  
 }
 .users-table th {
   background: var(--tablitsa-bg);

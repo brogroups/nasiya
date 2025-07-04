@@ -40,7 +40,7 @@
     @close="showUstaModel = false"
     @regetdata="fetchUsers"
   />
-  <Batafsil v-if="showBatafsil" :user="batafsilUser" @close="showBatafsil = false"/>
+  <Batafsil v-if="showBatafsil" :type="'usta'" :user="batafsilUser" @close="showBatafsil = false,fetchUsers()"/>
 </template>
 
 <script>
