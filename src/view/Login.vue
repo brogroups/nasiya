@@ -30,9 +30,10 @@ export default {
         });
         // Handle successful login (e.g., save token, redirect)
         this.error = "";
-
+        console.log(response);
+        
         if (response) {
-          localStorage.setItem("user", JSON.stringify(response));
+          localStorage.setItem("token", response?.data?.token);
         } else {
           throw new Error("No token received");
         }
